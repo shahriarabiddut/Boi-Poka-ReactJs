@@ -5,7 +5,7 @@ export default function Book({book}) {
     const {bookId,bookName,author,image,tags,category,yearOfPublishing,rating} = book;
   return (
     <div>
-        <Link to={`/books/${bookId}`}>
+        <Link to={`/book/${bookId}`}>
         <div className="card bg-base-100 w-96 border-gray-200 border-2 p-6">
             <figure className='bg-gray-200 px-4 py-8 rounded-2xl'>
                 <img
@@ -15,7 +15,7 @@ export default function Book({book}) {
             <div className="my-6 grid gap-4">
                 <div className="flex gap-3">
                     {
-                        tags.map(tag=> <span className='border-green-600 border-2 p-2 rounded-full text-green-600 font-bold'> {tag}</span>)
+                        tags.map((tag,index)=> <span key={index} className='border-green-600 border-2 p-2 rounded-full text-green-600 font-bold'> {tag}</span>)
                     }
                 </div>
                 <h2 className="text-3xl font-bold">{bookName}</h2>
