@@ -1,9 +1,12 @@
 import React from 'react'
+import Banner from '../Banner/Banner'
+import Books from '../Books/Books'
 
 export default function Home() {
   return (
     <>
-        <h2>HomePage</h2>
+        <Banner/>
+        <Books/>
     </>
   )
 }

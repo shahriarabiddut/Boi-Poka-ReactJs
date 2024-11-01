@@ -1,14 +1,15 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 
 export default function Navbar() {
     const links = <>
-                    <li><a>Home</a></li>
+                    <li><NavLink to={'/'}>Home</NavLink></li>
                     <li><a>Listed Books</a></li>
                     <li><a>Pages To Read</a></li>
                 </>
   return (
     <>
-        <div className="navbar bg-base-100">
+        <div className="navbar bg-base-100 work-sans-font">
         <div className="navbar-start">
             <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -38,8 +39,9 @@ export default function Navbar() {
             {links}
             </ul>
         </div>
-        <div className="navbar-end">
-            <a className="btn">Button</a>
+        <div className="navbar-end gap-2">
+            <a className="btn bg-green-600 text-white hover:bg-green-900">Sign In</a>
+            <a className="btn bg-sky-600 text-white hover:bg-sky-900">Sign Up</a>
         </div>
         </div>
     </>

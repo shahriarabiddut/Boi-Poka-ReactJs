@@ -5,6 +5,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import App from './App';
+import BookDetail from './components/BookDetail/BookDetail';
 import Dashboard from './components/Dashboard/Dashboard';
 import ErrorPage from './components/ErrorPage/ErrorPage';
 import Home from './components/Home/Home';
@@ -18,9 +19,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },{
+        path: "books/:bookId",
+        element: <BookDetail />,
       },
       {
-        path: "/dashboard",
+        path: "dashboard",
         element: <Dashboard />,
       },
     ],
