@@ -7,6 +7,7 @@ import Book from '../Book/Book';
 export default function () {
     const [readList,setReadList] = useState([]);
     const [wishList,setWishList] = useState([]);
+    const [sort,setSort] = useState('');
     const allBooks = useLoaderData();
     // useEffect(()=>{
     //     // Read List
@@ -29,6 +30,18 @@ export default function () {
         setReadList(filterStoredList(getStoredReadList() || [], allBooks));
         setWishList(filterStoredList(getStoredWishedList() || [], allBooks));
     }, []);
+
+    //Sorting
+    const handleSort = (sortType,storedList,storedListName) =>{
+        setSort(sortType);
+        if(sortType === 'Ratings'){
+            const sortedList = [...storedList].sort((a,b) => b.rating * 10 - a.rating * 10 );
+            storedListName === 'read' ? setReadList(sortedList) : setWishList(sortedList);
+        }else{
+            const sortedList = [...storedList].sort((a,b) => b.totalPages * 10 - a.totalPages * 10 );
+            storedListName === 'read' ? setReadList(sortedList) : setWishList(sortedList);
+        }
+    }
   return (
     <div className='my-6'>
         <h2 className="text-2xl my-8">
@@ -36,19 +49,33 @@ export default function () {
         </h2>
         <Tabs>
             <TabList>
-            <Tab>Read List ({readList.length})</Tab>
-            <Tab>Wish List ({wishList.length})</Tab>
+            <Tab onClick={()=>setSort('')}>Read List ({readList.length})</Tab>
+            <Tab onClick={()=>setSort('')}>Wish List ({wishList.length})</Tab>
             </TabList>
 
             <TabPanel>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="dropdown">
+                <div tabIndex={0} role="button" className="btn m-1">{ sort ? `Sort By : ${sort}`: `Sort By `}</div>
+                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                    <li><a onClick={()=>handleSort('Ratings',readList,'read')}>Ratings</a></li>
+                    <li><a onClick={()=>handleSort('Number Of Pages',readList,'read')}>Number Of Pages</a></li>
+                </ul>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4">
                  {
                 readList.map(book => <Book book={book} key={book.bookId}></Book>)
                 }
             </div>
             </TabPanel>
             <TabPanel>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            <div className="dropdown">
+                <div tabIndex={0} role="button" className="btn m-1">{ sort ? `Sort By : ${sort}`: `Sort By `}</div>
+                <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+                    <li><a onClick={()=>handleSort('Ratings',wishList,'wish')}>Ratings</a></li>
+                    <li><a onClick={()=>handleSort('Number Of Pages',wishList,'wish')}>Number Of Pages</a></li>
+                </ul>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 my-4">
                  {
                 wishList.map(book => <Book book={book} key={book.bookId}></Book>)
                 }
