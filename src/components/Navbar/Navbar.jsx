@@ -4,12 +4,11 @@ import { NavLink } from 'react-router-dom'
 export default function Navbar() {
     const links = <>
                     <li><NavLink to={'/'}>Home</NavLink></li>
-                    <li><a>Listed Books</a></li>
-                    <li><a>Pages To Read</a></li>
+                    <li><NavLink to={'/listedbooks'}>Listed Books</NavLink></li>
                 </>
   return (
     <>
-        <div className="navbar bg-base-100 work-sans-font">
+        <div className="navbar bg-base-100 work-sans-font mt-7">
         <div className="navbar-start">
             <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

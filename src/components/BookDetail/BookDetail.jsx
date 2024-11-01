@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLoaderData, useParams } from 'react-router-dom';
+import { addToStoredReadList, addToStoredWishedList, existOrNot, wishedOrNot } from '../../utility/addToDB';
 
 export default function BookDetail() {
   const { bookId } = useParams();
   const books = useLoaderData();
   const book = books.find(b => b.bookId === parseInt(bookId));
   const {bookName,author,image,tags,review,category,publisher,yearOfPublishing,rating,totalPages} = book;
+  // Mark as Read Button
+  let readData = existOrNot(bookId) == 1? true : false;
+  const [readOrNot, setReadOrNot] = useState(readData);
+  const handleMarkAsRead = (id) => {
+    addToStoredReadList(id);
+    setReadOrNot(true); 
+  }
+  // Mark as Wished Button
+  let wishedData = wishedOrNot(bookId) == 1? true : false;
+  const [wishOrNot, setWishOrNot] = useState(wishedData);
+  const handleMarkAsWished = (id) => {
+    addToStoredWishedList(id);
+    setWishOrNot(true); 
+  }
   return (
     <div className='my-20 '>
         <div className="flex w-full flex-col lg:flex-row">
@@ -29,8 +44,9 @@ export default function BookDetail() {
             <p className=''><b>Total Pages</b> : {totalPages}</p> 
             <p className=''><b>Ratings</b> : {rating}/5</p> 
             <div className="flex justify-between gap-2">
-              <a className="btn bg-green-600 text-white hover:bg-green-900">Read</a>
-              <a className="btn bg-sky-600 text-white hover:bg-sky-900">WishList</a>
+              {!readOrNot && (<a className="btn bg-green-600 text-white hover:bg-green-900" onClick={() => handleMarkAsRead(bookId)}>Mark as Read</a>)}
+              {!wishOrNot && (<a className="btn bg-sky-600 text-white hover:bg-sky-900" onClick={() => handleMarkAsWished(bookId)}>Add to WishList</a>)}
+              
             </div>
           </div>
         </div>
